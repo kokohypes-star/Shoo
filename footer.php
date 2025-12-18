@@ -78,46 +78,38 @@
         </div>
 
         <!-- Mobile Footer Navigation Bar -->
-        <nav id="mobile-footer-nav" class="mobile-footer-nav md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-50">
-            <div class="flex items-center justify-around py-2">
-                <?php
-                $mobile_nav_items = array(
-                    array(
-                        'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-                        'label' => __('Home', 'shoobu'),
-                        'url' => home_url('/'),
-                    ),
-                    array(
-                        'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
-                        'label' => __('Shop', 'shoobu'),
-                        'url' => get_post_type_archive_link('shoobu_product'),
-                    ),
-                    array(
-                        'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
-                        'label' => __('Cart', 'shoobu'),
-                        'url' => home_url('/cart/'),
-                        'show_badge' => true,
-                    ),
-                    array(
-                        'icon' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-                        'label' => __('Account', 'shoobu'),
-                        'url' => is_user_logged_in() ? home_url('/account/') : wp_login_url(),
-                    ),
-                );
+        <nav id="mobile-footer-nav" class="mobile-footer-nav md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-50 py-3">
+            <div class="flex items-center justify-around">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="mobile-nav-item flex flex-col items-center text-gray-700 hover:text-purple-600">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span class="text-xs mt-1"><?php _e('Home', 'shoobu'); ?></span>
+                </a>
 
-                foreach ($mobile_nav_items as $item) :
-                    $is_active = (home_url($_SERVER['REQUEST_URI']) === $item['url']) || (is_front_page() && $item['url'] === home_url('/'));
-                ?>
-                    <a href="<?php echo esc_url($item['url']); ?>" class="mobile-nav-item flex flex-col items-center gap-1 px-4 py-1 <?php echo $is_active ? 'text-purple-600' : 'text-gray-500'; ?>">
-                        <div class="relative">
-                            <?php echo $item['icon']; ?>
-                            <?php if (isset($item['show_badge']) && $item['show_badge']) : ?>
-                                <span class="mobile-cart-badge absolute -top-1 -right-1 bg-purple-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
-                            <?php endif; ?>
-                        </div>
-                        <span class="text-xs"><?php echo esc_html($item['label']); ?></span>
-                    </a>
-                <?php endforeach; ?>
+                <a href="<?php echo esc_url(get_post_type_archive_link('shoobu_product')); ?>" class="mobile-nav-item flex flex-col items-center text-gray-700 hover:text-purple-600">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l12-1L18.5 4m4.5 8l-3 12H4.5l-3-12m3 0L7 4m10 5l-3.5-9"/>
+                    </svg>
+                    <span class="text-xs mt-1"><?php _e('Shop', 'shoobu'); ?></span>
+                </a>
+
+                <a href="<?php echo esc_url(home_url('/cart/')); ?>" class="mobile-nav-item flex flex-col items-center text-purple-600">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="text-xs mt-1"><?php _e('Cart', 'shoobu'); ?></span>
+                </a>
+
+                <a href="<?php echo esc_url(home_url('/login/')); ?>" class="mobile-nav-item flex flex-col items-center text-gray-700 hover:text-purple-600">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M12 3l9 9-9 9"/>
+                    </svg>
+                    <span class="text-xs mt-1"><?php _e('Login', 'shoobu'); ?></span>
+                </a>
             </div>
         </nav>
     </footer>
