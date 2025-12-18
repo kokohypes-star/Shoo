@@ -1,1 +1,580 @@
+/**
+ * Shoobu Theme - Main Stylesheet
+ *
+ * @package Shoobu
+ * @version 1.0.0
+ */
 
+/* ============================================
+   Animation Keyframes
+   ============================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* ============================================
+   Utility Animation Classes
+   ============================================ */
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in-down {
+    animation: fadeInDown 0.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* ============================================
+   Skeleton Loading
+   ============================================ */
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-text {
+    height: 1em;
+    border-radius: 4px;
+}
+
+.skeleton-image {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+}
+
+/* ============================================
+   Banner Hover Effects
+   ============================================ */
+
+.banner-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.banner-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.banner-hover img {
+    transition: transform 0.3s ease;
+}
+
+.banner-hover:hover img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   Product Card Enhancements
+   ============================================ */
+
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .product-image {
+    overflow: hidden;
+}
+
+.product-card .product-image img {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-card .quick-add {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-card:hover .quick-add {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   Rating Stars
+   ============================================ */
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.product-rating .star {
+    color: #f59e0b;
+}
+
+.product-rating .star.empty {
+    color: #d1d5db;
+}
+
+.product-rating .rating-value {
+    margin-left: 4px;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* ============================================
+   Sale Badge
+   ============================================ */
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    z-index: 5;
+}
+
+/* ============================================
+   Add to Cart Button States
+   ============================================ */
+
+.btn-add-to-cart {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-add-to-cart.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-add-to-cart .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ============================================
+   Quantity Selector
+   ============================================ */
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.quantity-selector button {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.quantity-selector button:hover {
+    background: #f3f4f6;
+}
+
+.quantity-selector button:active {
+    background: #e5e7eb;
+}
+
+.quantity-selector input {
+    width: 50px;
+    height: 36px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    font-weight: 500;
+}
+
+.quantity-selector input:focus {
+    outline: none;
+}
+
+/* ============================================
+   Filter Sidebar
+   ============================================ */
+
+.filter-group {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-group:last-child {
+    border-bottom: none;
+}
+
+.filter-group-title {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    cursor: pointer;
+}
+
+.filter-option:hover {
+    color: #7c3aed;
+}
+
+.filter-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #7c3aed;
+}
+
+/* ============================================
+   Mobile Bottom Navigation
+   ============================================ */
+
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    z-index: 50;
+}
+
+.mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: #6b7280;
+    font-size: 0.625rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.mobile-bottom-nav a.active,
+.mobile-bottom-nav a:hover {
+    color: #7c3aed;
+}
+
+.mobile-bottom-nav svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ============================================
+   Gradient Text Animation
+   ============================================ */
+
+.animate-gradient-text {
+    background: linear-gradient(
+        90deg,
+        #7c3aed,
+        #ec4899,
+        #f59e0b,
+        #10b981,
+        #3b82f6,
+        #7c3aed
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================================
+   Form Enhancements
+   ============================================ */
+
+.form-input,
+.form-select,
+.form-textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* ============================================
+   Price Styling
+   ============================================ */
+
+.price-original {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+.price-sale {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.price-current {
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+/* ============================================
+   Image Gallery (Product Detail)
+   ============================================ */
+
+.gallery-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+}
+
+.gallery-thumbnail {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.gallery-thumbnail:hover,
+.gallery-thumbnail.active {
+    border-color: #7c3aed;
+}
+
+.gallery-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================================
+   Responsive Utilities
+   ============================================ */
+
+@media (max-width: 767px) {
+    .hide-mobile {
+        display: none !important;
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+}
+
+@media (min-width: 768px) {
+    .hide-desktop {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* ============================================
+   Selection Styling
+   ============================================ */
+
+::selection {
+    background: rgba(124, 58, 237, 0.2);
+    color: inherit;
+}
+
+/* ============================================
+   Focus Visible
+   ============================================ */
+
+:focus-visible {
+    outline: 2px solid #7c3aed;
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+    .site-header,
+    .site-footer,
+    .mobile-bottom-nav,
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        padding: 0 !important;
+    }
+}
