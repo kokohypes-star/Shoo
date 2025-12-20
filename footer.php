@@ -78,8 +78,8 @@
         </div>
 
         <!-- Mobile Footer Navigation Bar -->
-        <nav id="mobile-footer-nav" class="mobile-footer-nav md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-50 py-3">
-            <div class="flex items-center justify-around">
+        <nav id="mobile-footer-nav" class="mobile-footer-nav md:hidden fixed bottom-0 left-0 w-full bg-white border-t z-50" style="right: 0; height: auto;">
+            <div class="flex items-center justify-around w-full" style="padding: 12px 0;">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="mobile-nav-item flex flex-col items-center text-gray-700 hover:text-purple-600">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
