@@ -79,8 +79,8 @@
 
         <!-- Mobile Footer Navigation Bar -->
         <nav id="mobile-footer-nav" class="mobile-footer-nav md:hidden fixed bottom-0 left-0 w-full bg-white border-t z-50" style="right: 0; height: auto; border-color: var(--shoobu-border);">
-            <div class="flex items-center justify-around w-full" style="padding: 1rem 0; gap: 0.5rem;">
-                <a href="<?php echo esc_url(home_url('/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1 flex-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
+            <div class="flex items-center justify-center w-full" style="padding: 1rem 0; gap: 2rem;">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                         <polyline points="9 22 9 12 15 12 15 22"/>
@@ -88,14 +88,14 @@
                     <span class="text-xs font-medium" style="letter-spacing: 0.3px;"><?php _e('Home', 'shoobu'); ?></span>
                 </a>
 
-                <a href="<?php echo esc_url(get_post_type_archive_link('shoobu_product')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1 flex-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
+                <a href="<?php echo esc_url(get_post_type_archive_link('shoobu_product')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M6 9l12-1L18.5 4m4.5 8l-3 12H4.5l-3-12m3 0L7 4m10 5l-3.5-9"/>
                     </svg>
                     <span class="text-xs font-medium" style="letter-spacing: 0.3px;"><?php _e('Shop', 'shoobu'); ?></span>
                 </a>
 
-                <a href="<?php echo esc_url(home_url('/cart/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1 flex-1" style="color: var(--shoobu-primary); transition: all 0.2s ease;">
+                <a href="<?php echo esc_url(home_url('/cart/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1" style="color: var(--shoobu-primary); transition: all 0.2s ease;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="9" cy="21" r="1"/>
                         <circle cx="20" cy="21" r="1"/>
@@ -104,7 +104,7 @@
                     <span class="text-xs font-medium" style="letter-spacing: 0.3px;"><?php _e('Cart', 'shoobu'); ?></span>
                 </a>
 
-                <a href="<?php echo esc_url(home_url('/login/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1 flex-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
+                <a href="<?php echo esc_url(home_url('/login/')); ?>" class="mobile-nav-item flex flex-col items-center justify-center gap-1" style="color: var(--shoobu-text-light); transition: all 0.2s ease;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 12h18M12 3l9 9-9 9"/>
                     </svg>
@@ -115,6 +115,12 @@
         
         <style>
             @media (max-width: 767px) {
+                #page {
+                    width: 100% !important;
+                    height: auto !important;
+                    overflow-x: hidden;
+                }
+                
                 .mobile-nav-item:hover {
                     color: var(--shoobu-primary);
                 }
@@ -125,6 +131,12 @@
                 
                 .mobile-nav-item:hover svg {
                     transform: scale(1.05);
+                }
+                
+                .hero-slider, .carousel-container, .swiper-container {
+                    margin-bottom: 30px !important;
+                    width: 100% !important;
+                    height: auto !important;
                 }
             }
         </style>
