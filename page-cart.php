@@ -9,10 +9,10 @@ get_header();
 ?>
 
 <main id="main-content" class="site-main">
-    <div class="container py-8 px-4 md:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold mb-8"><?php _e('Shopping Cart', 'shoobu'); ?></h1>
+    <div class="container py-6 md:py-8 px-4 md:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold mb-6 md:mb-8"><?php _e('Shopping Cart', 'shoobu'); ?></h1>
         
-        <div id="cart-container" class="cart-layout grid gap-8" style="grid-template-columns: 1fr;">
+        <div id="cart-container" class="cart-layout grid gap-6 md:gap-8" style="grid-template-columns: 1fr;">
             <!-- Cart Items -->
             <div id="cart-items" class="cart-items space-y-4">
                 <div class="empty-cart text-center py-12" id="empty-cart">
@@ -32,15 +32,37 @@ get_header();
                 <div id="cart-items-list" class="space-y-4"></div>
             </div>
 
-            <!-- Cart Summary -->
+            <!-- Cart Summary - Mobile & Desktop -->
             <div id="cart-summary" class="cart-summary hidden">
-                <div class="card p-6 sticky top-24">
+                <!-- Mobile Cart Summary (Fixed Bottom) -->
+                <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-40">
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600"><?php _e('Subtotal', 'shoobu'); ?></span>
+                            <span id="cart-subtotal-mobile" class="font-semibold" data-testid="text-subtotal-mobile">&#8358;0</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600"><?php _e('Shipping', 'shoobu'); ?></span>
+                            <span class="text-green-600 text-sm"><?php _e('Free', 'shoobu'); ?></span>
+                        </div>
+                        <div class="border-t pt-2 flex justify-between">
+                            <span class="font-bold"><?php _e('Total', 'shoobu'); ?></span>
+                            <span id="cart-total-mobile" class="text-lg font-bold text-purple-600" data-testid="text-total-mobile">&#8358;0</span>
+                        </div>
+                    </div>
+                    <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="btn btn-primary w-full mb-2" data-testid="button-checkout-mobile">
+                        <?php _e('Checkout', 'shoobu'); ?>
+                    </a>
+                </div>
+
+                <!-- Desktop Cart Summary (Sidebar) -->
+                <div class="hidden md:block card p-6 sticky top-24">
                     <h2 class="text-xl font-bold mb-4"><?php _e('Order Summary', 'shoobu'); ?></h2>
                     
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between">
                             <span class="text-gray-600"><?php _e('Subtotal', 'shoobu'); ?></span>
-                            <span id="cart-subtotal" class="font-semibold" data-testid="text-subtotal">&#8358;0</span>
+                            <span id="cart-subtotal-desktop" class="font-semibold" data-testid="text-subtotal-desktop">&#8358;0</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600"><?php _e('Shipping', 'shoobu'); ?></span>
@@ -48,11 +70,11 @@ get_header();
                         </div>
                         <div class="border-t pt-3 flex justify-between">
                             <span class="font-bold"><?php _e('Total', 'shoobu'); ?></span>
-                            <span id="cart-total" class="text-xl font-bold text-purple-600" data-testid="text-total">&#8358;0</span>
+                            <span id="cart-total-desktop" class="text-xl font-bold text-purple-600" data-testid="text-total-desktop">&#8358;0</span>
                         </div>
                     </div>
                     
-                    <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="btn btn-primary btn-lg w-full mb-3" data-testid="button-checkout">
+                    <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="btn btn-primary btn-lg w-full mb-3" data-testid="button-checkout-desktop">
                         <?php _e('Proceed to Checkout', 'shoobu'); ?>
                     </a>
                     
@@ -137,18 +159,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const cartItemsList = document.getElementById('cart-items-list');
         const emptyCart = document.getElementById('empty-cart');
         const cartSummary = document.getElementById('cart-summary');
-        const subtotalEl = document.getElementById('cart-subtotal');
-        const totalEl = document.getElementById('cart-total');
+        
+        // Update all subtotal and total elements
+        const subtotalEls = [
+            document.getElementById('cart-subtotal-mobile'),
+            document.getElementById('cart-subtotal-desktop')
+        ];
+        const totalEls = [
+            document.getElementById('cart-total-mobile'),
+            document.getElementById('cart-total-desktop')
+        ];
         
         if (cart.length === 0) {
             emptyCart.style.display = 'block';
             cartItemsList.innerHTML = '';
             cartSummary.classList.add('hidden');
+            // Add padding to avoid overlap with footer nav on mobile
+            document.body.style.paddingBottom = '80px';
             return;
         }
         
         emptyCart.style.display = 'none';
         cartSummary.classList.remove('hidden');
+        // Add padding to avoid overlap with cart summary on mobile
+        document.body.style.paddingBottom = '200px';
         
         let subtotal = 0;
         let html = '';
@@ -158,31 +192,40 @@ document.addEventListener('DOMContentLoaded', function() {
             subtotal += itemTotal;
             
             html += `
-                <div class="cart-item" data-index="${index}">
-                    <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="cart-item-details">
-                        <h3 class="font-semibold mb-1">${item.name}</h3>
-                        <p class="text-purple-600 font-bold mb-3">&#8358;${item.price.toLocaleString()}</p>
-                        <div class="cart-item-quantity">
-                            <button type="button" class="qty-decrease" data-index="${index}">-</button>
-                            <input type="number" value="${item.quantity}" min="1" readonly>
-                            <button type="button" class="qty-increase" data-index="${index}">+</button>
-                            <button type="button" class="remove-item ml-4 text-red-500 text-sm" data-index="${index}">Remove</button>
+                <div class="cart-item card" data-index="${index}">
+                    <div class="flex gap-4">
+                        <div class="cart-item-image flex-shrink-0">
+                            <img src="${item.image}" alt="${item.name}">
                         </div>
-                    </div>
-                    <div class="cart-item-total text-right">
-                        <p class="font-bold">&#8358;${itemTotal.toLocaleString()}</p>
+                        <div class="cart-item-details flex-1">
+                            <h3 class="font-semibold text-lg mb-1">${item.name}</h3>
+                            <p class="text-purple-600 font-bold mb-3">&#8358;${item.price.toLocaleString()}</p>
+                            <div class="cart-item-quantity flex items-center gap-2 flex-wrap">
+                                <button type="button" class="qty-decrease px-2 py-1 border rounded" data-index="${index}">−</button>
+                                <input type="number" value="${item.quantity}" min="1" readonly class="w-12 text-center border rounded py-1">
+                                <button type="button" class="qty-increase px-2 py-1 border rounded" data-index="${index}">+</button>
+                                <button type="button" class="remove-item ml-auto text-red-600 text-sm font-semibold hover:text-red-700" data-index="${index}">Remove</button>
+                            </div>
+                        </div>
+                        <div class="cart-item-total text-right flex-shrink-0">
+                            <p class="font-bold text-purple-600">&#8358;${itemTotal.toLocaleString()}</p>
+                        </div>
                     </div>
                 </div>
             `;
         });
         
         cartItemsList.innerHTML = html;
-        subtotalEl.textContent = '₦' + subtotal.toLocaleString();
-        totalEl.textContent = '₦' + subtotal.toLocaleString();
         
+        // Update all subtotal and total displays
+        subtotalEls.forEach(el => {
+            if (el) el.textContent = '₦' + subtotal.toLocaleString();
+        });
+        totalEls.forEach(el => {
+            if (el) el.textContent = '₦' + subtotal.toLocaleString();
+        });
+        
+        // Attach event listeners
         cartItemsList.querySelectorAll('.qty-decrease').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 const idx = parseInt(this.getAttribute('data-index'));
