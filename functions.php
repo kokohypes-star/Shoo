@@ -312,6 +312,52 @@ function shoobu_create_default_categories() {
 add_action('after_switch_theme', 'shoobu_create_default_categories');
 
 /**
+ * Create Default Pages (Cart, Checkout, Login, Account) on Theme Activation
+ */
+function shoobu_create_default_pages() {
+    $pages = array(
+        'cart' => array(
+            'title'    => 'Shopping Cart',
+            'template' => 'page-cart.php'
+        ),
+        'checkout' => array(
+            'title'    => 'Checkout',
+            'template' => 'page-checkout.php'
+        ),
+        'login' => array(
+            'title'    => 'Login',
+            'template' => 'page-login.php'
+        ),
+        'account' => array(
+            'title'    => 'My Account',
+            'template' => 'page-account.php'
+        )
+    );
+    
+    foreach ($pages as $slug => $page_data) {
+        // Check if page already exists
+        $existing_page = get_page_by_path($slug);
+        
+        if (!$existing_page) {
+            // Create the page
+            $page_id = wp_insert_post(array(
+                'post_type'   => 'page',
+                'post_title'  => $page_data['title'],
+                'post_name'   => $slug,
+                'post_status' => 'publish',
+                'post_content' => ''
+            ));
+            
+            // Set the page template
+            if ($page_id && !is_wp_error($page_id)) {
+                update_post_meta($page_id, '_wp_page_template', $page_data['template']);
+            }
+        }
+    }
+}
+add_action('after_switch_theme', 'shoobu_create_default_pages');
+
+/**
  * Flush Rewrite Rules on Theme Activation
  */
 function shoobu_flush_rewrite_rules() {
