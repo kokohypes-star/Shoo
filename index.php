@@ -5,14 +5,6 @@
  * @package Shoobu
  */
 
-// Load page template if it exists
-if (is_page()) {
-    $template_name = get_page_template_slug();
-    if ($template_name && file_exists(get_template_directory() . '/' . $template_name)) {
-        include(get_template_directory() . '/' . $template_name);
-        exit;
-    }
-}
 
 get_header();
 ?>

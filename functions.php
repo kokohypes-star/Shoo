@@ -363,9 +363,20 @@ add_action('after_switch_theme', 'shoobu_create_default_pages');
 function shoobu_flush_rewrite_rules() {
     shoobu_register_product_post_type();
     shoobu_register_product_taxonomy();
-    flush_rewrite_rules();
+    flush_rewrite_rules(false); // false means don't use cache
 }
 add_action('after_switch_theme', 'shoobu_flush_rewrite_rules');
+
+/**
+ * Ensure Rewrite Rules are Flushed After Theme Init
+ */
+function shoobu_maybe_flush_rewrite_rules() {
+    if (!get_option('shoobu_rewrite_flushed')) {
+        flush_rewrite_rules(false);
+        update_option('shoobu_rewrite_flushed', 1);
+    }
+}
+add_action('wp_loaded', 'shoobu_maybe_flush_rewrite_rules');
 
 /**
  * Admin Scripts for Media Uploader
