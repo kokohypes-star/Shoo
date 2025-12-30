@@ -133,8 +133,20 @@
                     transform: scale(1.05);
                 }
                 
-                .hero-slider, .carousel-container, .swiper-container {
+                .hero-slider, .carousel-container, .swiper-container, #hero-slider {
                     margin-bottom: 30px !important;
+                    width: 100% !important;
+                    height: 100px !important;
+                }
+
+                .premium-tech-section .grid, .premium-tech-section .flex {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    width: 100% !important;
+                    height: auto !important;
+                }
+
+                .premium-tech-section article, .premium-tech-section .card {
                     width: 100% !important;
                     height: auto !important;
                 }

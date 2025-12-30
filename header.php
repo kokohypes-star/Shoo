@@ -65,7 +65,7 @@
 
                 <!-- Mobile Navigation -->
                 <nav class="mobile-nav md:hidden flex items-center gap-6">
-                    <!-- Search Icon -->
+                    <!-- Search Icon (Centered Search Box Icon) -->
                     <button type="button" id="mobile-search-toggle" class="p-1" data-testid="button-mobile-search">
                         <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"/>
